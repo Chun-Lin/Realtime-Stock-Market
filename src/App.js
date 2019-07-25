@@ -1,11 +1,13 @@
-import React from 'react';
-import logo from 'logo.svg';
-import 'App.css';
+import React from 'react'
+import logo from 'logo.svg'
+import StockChart from 'components/StockChart'
+import 'App.css'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <StockChart />
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -20,7 +22,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
