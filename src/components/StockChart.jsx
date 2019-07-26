@@ -5,8 +5,15 @@ const StockChart = () => {
   const [stockIntraday, setStockIntraday] = useState(null)
 
   useEffect(() => {
-    apiIntraday('AAPL', 5).then(stockData => console.log(stockData.data))
-  }, [stockIntraday])
+    const fetchStockIntradayData = async () => {
+      const stockIntradayData = await apiIntraday('AAPL', 5)
+      console.log("LOG: fetchStockIntradayData -> stockIntradayData", stockIntradayData.data)
+      
+      setStockIntraday(stockIntradayData.data)
+    }
+
+    fetchStockIntradayData()
+  }, [])
 
   return (
     <>
