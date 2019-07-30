@@ -12,8 +12,8 @@ const StockChart = () => {
       const polishedRes = apiPolish(stockIntradayData.data)
 
       // turn timeSeries data from object of object to array of object
-      polishedRes.timeSeries5min = arrayOfObject(polishedRes.timeSeries5min)
-      setStockIntraday(polishedRes.timeSeries5min)
+      polishedRes.timeSeries = arrayOfObject(polishedRes.timeSeries)
+      setStockIntraday(polishedRes.timeSeries)
     }
 
     fetchStockIntradayData()

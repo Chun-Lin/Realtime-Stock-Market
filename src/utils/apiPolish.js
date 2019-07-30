@@ -1,4 +1,4 @@
-export const apiPolish = data => {
+export const apiPolish = (data) => {
   // If this is not an object, dont recurse.
   if (!data || typeof data !== 'object') {
     return data
@@ -13,7 +13,7 @@ export const apiPolish = data => {
       .charAt(0)
       .toLowerCase()
       .concat(originalKey.substring(1))
-      .replace(/\s|[()]|\d{1}\.\s/g, '')
+      .replace(/\s|\(\d+\w+\)|\d{1}\.\s/g, '')
 
     clean[key] = apiPolish(data[originalKey])
   })
