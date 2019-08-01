@@ -7,8 +7,6 @@ const StockChart = () => {
   useEffect(() => {
     const fetchStockIntradayData = async () => {
       const stockIntradayData = await apiIntraday('AAPL')
-      console.log("LOG: fetchStockIntradayData -> stockIntradayData", stockIntradayData)
-      
     }
 
     fetchStockIntradayData()

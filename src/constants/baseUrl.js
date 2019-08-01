@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://api-v2.intrinio.com/'
+export const BASE_URL = 'https://api-v2.intrinio.com'
