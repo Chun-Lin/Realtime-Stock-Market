@@ -1,19 +1,21 @@
 import axios from 'axios'
-import { stringify } from 'querystring'
-import { BASE_URL, INTRADAY, API_KEY } from 'constants/index'
+import {
+  BASE_URL,
+  SANDBOX_API_KEY,
+  SANDBOX_PUBLIC_API_KEY,
+} from 'constants/index'
 
-const alphaVantageRequest = axios.create({
+const intrinoRequest = axios.create({
   baseURL: BASE_URL,
+  timeout: 10000,
+  headers: {
+    Authorization: `Bearer ${SANDBOX_API_KEY}`,
+    'X-Authorization-Public-Key': `${SANDBOX_PUBLIC_API_KEY}`,
+  },
 })
 
-export const apiIntraday = (symbol, interval) => {
-  const queryStringIntraday = {
-    function: INTRADAY,
-    symbol: symbol,
-    interval: `${interval}min`,
-    outputsize: 'full',
-    apikey: API_KEY
-  }
+export const apiIntraday = symbol =>
+  intrinoRequest.get(`/securities/${symbol}/prices/intraday`)
 
-  return alphaVantageRequest.get(`/query?${stringify(queryStringIntraday)}`)
-}
+export const apiSearchSecurity = symbol =>
+  intrinoRequest.get(`/securities/search?query${symbol}`)

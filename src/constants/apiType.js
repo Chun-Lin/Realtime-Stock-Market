@@ -1,6 +1,0 @@
-export const INTRADAY = 'TIME_SERIES_INTRADAY'
-export const DAILY = 'TIME_SERIES_DAILY'
-export const WEEKLY = 'TIME_SERIES_WEEKLY'
-export const MONTHLY = 'TIME_SERIES_MONTHLY'
-export const QUOTELY = 'GLOBAL_QUOTE'
-export const SEARCH = 'SYMBOL_SEARCH'
