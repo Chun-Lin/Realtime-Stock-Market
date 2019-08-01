@@ -18,8 +18,20 @@ const intrinoSecurityRequest = axios.create({
   headers: headers,
 })
 
+const intrinoCompanyRequest = axios.create({
+  baseURL: `${BASE_URL}/companies/`,
+  timeout: 10000,
+  headers: headers,
+})
+
 const intrinoHistoricalDataRequest = axios.create({
   baseURL: `${BASE_URL}/historical_data/`,
+  timeout: 10000,
+  headers: headers,
+})
+
+const intrinoIndiceRequest = axios.create({
+  baseURL: `${BASE_URL}/indices/`,
   timeout: 10000,
   headers: headers,
 })
@@ -27,12 +39,20 @@ const intrinoHistoricalDataRequest = axios.create({
 export const apiIntraday = symbol =>
   intrinoSecurityRequest.get(`${symbol}/prices/intraday`)
 
-export const apiSearchSecurity = symbol =>
-  intrinoSecurityRequest.get(`search?query=${symbol}`)
-
 export const apiLookupSecurityId = symbol =>
   intrinoSecurityRequest.get(`${symbol}`)
 
+export const apiSearchCompany = symbol =>
+  intrinoCompanyRequest.get(`search?query=${symbol}`)
+
+export const apiCompanyProfile = symbol =>
+  intrinoCompanyRequest.get(`${symbol}`)
+
+export const apiCompanyNews = symbol =>
+  intrinoCompanyRequest.get(`${symbol}/news`)
+
+export const apiIndiceHistoricalDataClosePrice = symbol =>
+  intrinoIndiceRequest.get(`stock_market/${symbol}/historical_data/close_price`)
 
 export const apiHistoricalSecurtiyClosePrice = ({
   symbol,
