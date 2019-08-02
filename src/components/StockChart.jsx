@@ -3,6 +3,7 @@ import {
   apiIntraday,
   apiSearchCompany,
   apiIndiceHistoricalDataClosePrice,
+  apiRealtimeSecurityPrice,
 } from 'api'
 
 const StockChart = () => {
@@ -10,7 +11,7 @@ const StockChart = () => {
 
   useEffect(() => {
     const fetchStockIntradayData = async () => {
-      const stockIntradayData = await apiIndiceHistoricalDataClosePrice('$DJI')
+      const stockIntradayData = await apiRealtimeSecurityPrice('AAPL')
     }
 
     fetchStockIntradayData()
