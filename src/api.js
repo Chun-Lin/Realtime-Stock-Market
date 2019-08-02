@@ -42,9 +42,8 @@ export const apiIntraday = symbol =>
 export const apiLookupSecurityId = symbol =>
   intrinoSecurityRequest.get(`${symbol}`)
 
-export const apiRealtimeSecurityPrice = symbol => {
+export const apiRealtimeSecurityPrice = symbol =>
   intrinoSecurityRequest.get(`${symbol}/prices/realtime`)
-}
 
 export const apiSearchCompany = symbol =>
   intrinoCompanyRequest.get(`search?query=${symbol}`)
