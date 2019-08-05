@@ -2,7 +2,9 @@ import axios from 'axios'
 import { stringify } from 'querystring'
 
 import {
-  BASE_URL,
+  INTRINIO_BASE_URL,
+  WORLD_TRADING_DATA_INTRADAY_BASE_URL,
+  WORLD_TRADING_DATA_API_KEY,
   SANDBOX_API_KEY,
   SANDBOX_PUBLIC_API_KEY,
 } from 'constants/index'
@@ -10,52 +12,62 @@ import {
 const headers = {
   Authorization: `Bearer ${SANDBOX_API_KEY}`,
   'X-Authorization-Public-Key': `${SANDBOX_PUBLIC_API_KEY}`,
+  'Access-Control-Allow-Origin': '*',
+  'Content-Type': 'application/x-www-form-urlencoded',
 }
 
-const intrinoSecurityRequest = axios.create({
-  baseURL: `${BASE_URL}/securities/`,
+const intrinioSecurityRequest = axios.create({
+  baseURL: `${INTRINIO_BASE_URL}/securities/`,
   timeout: 10000,
   headers: headers,
 })
 
-const intrinoCompanyRequest = axios.create({
-  baseURL: `${BASE_URL}/companies/`,
+const intrinioCompanyRequest = axios.create({
+  baseURL: `${INTRINIO_BASE_URL}/companies/`,
   timeout: 10000,
   headers: headers,
 })
 
-const intrinoHistoricalDataRequest = axios.create({
-  baseURL: `${BASE_URL}/historical_data/`,
+const intrinioHistoricalDataRequest = axios.create({
+  baseURL: `${INTRINIO_BASE_URL}/historical_data/`,
   timeout: 10000,
   headers: headers,
 })
 
-const intrinoIndiceRequest = axios.create({
-  baseURL: `${BASE_URL}/indices/`,
+const intrinioIndiceRequest = axios.create({
+  baseURL: `${INTRINIO_BASE_URL}/indices/`,
+  timeout: 10000,
+  headers: headers,
+})
+
+const worldTradingDataIntradayRequest = axios.create({
+  baseURL: `${WORLD_TRADING_DATA_INTRADAY_BASE_URL}/intraday/`,
   timeout: 10000,
   headers: headers,
 })
 
 export const apiIntraday = symbol =>
-  intrinoSecurityRequest.get(`${symbol}/prices/intraday`)
+  intrinioSecurityRequest.get(`${symbol}/prices/intraday`)
 
 export const apiLookupSecurityId = symbol =>
-  intrinoSecurityRequest.get(`${symbol}`)
+  intrinioSecurityRequest.get(`${symbol}`)
 
 export const apiRealtimeSecurityPrice = symbol =>
-  intrinoSecurityRequest.get(`${symbol}/prices/realtime`)
+  intrinioSecurityRequest.get(`${symbol}/prices/realtime`)
 
 export const apiSearchCompany = symbol =>
-  intrinoCompanyRequest.get(`search?query=${symbol}`)
+  intrinioCompanyRequest.get(`search?query=${symbol}`)
 
 export const apiCompanyProfile = symbol =>
-  intrinoCompanyRequest.get(`${symbol}`)
+  intrinioCompanyRequest.get(`${symbol}`)
 
 export const apiCompanyNews = symbol =>
-  intrinoCompanyRequest.get(`${symbol}/news`)
+  intrinioCompanyRequest.get(`${symbol}/news`)
 
 export const apiIndiceHistoricalDataClosePrice = symbol =>
-  intrinoIndiceRequest.get(`stock_market/${symbol}/historical_data/close_price`)
+  intrinioIndiceRequest.get(
+    `stock_market/${symbol}/historical_data/close_price`,
+  )
 
 export const apiHistoricalSecurtiyClosePrice = ({
   symbol,
@@ -67,7 +79,24 @@ export const apiHistoricalSecurtiyClosePrice = ({
     page_size: pageSize,
   }
 
-  return intrinoHistoricalDataRequest.get(
+  return intrinioHistoricalDataRequest.get(
     `${symbol}/close_price?${stringify(queryParameters)}`,
   )
+}
+
+export const apiIndiceIntraday = ({
+  symbol,
+  range = 1,
+  interval = 5,
+  sort = 'asc',
+}) => {
+  const queryParameters = {
+    symbol: symbol,
+    range: range,
+    interval: interval,
+    sort: sort,
+    api_token: WORLD_TRADING_DATA_API_KEY,
+  }
+
+  worldTradingDataIntradayRequest.get(`?${stringify(queryParameters)}`)
 }
