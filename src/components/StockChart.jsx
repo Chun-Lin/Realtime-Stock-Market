@@ -7,12 +7,14 @@ const StockChart = () => {
   useEffect(() => {
     const fetchStockIntradayData = async () => {
       const stockIntradayData = await axios.get(
-        'api/securities/intraday?symbol=AAPL',
+        'api/historical_data/close_price?symbol=AAPL',
       )
-      console.log(
-        'LOG: fetchStockIntradayData -> stockIntradayData',
-        stockIntradayData,
+      const nextData = await axios.get(
+        `api/historical_data/close_price?symbol=AAPL&nextPage${
+          stockIntradayData.next_page
+        }`,
       )
+      console.log('LOG: fetchStockIntradayData -> stockIntradayData', nextData)
     }
 
     fetchStockIntradayData()

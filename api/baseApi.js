@@ -62,19 +62,16 @@ const apiCompanyProfile = symbol => intrinioCompanyRequest.get(`${symbol}`)
 
 const apiCompanyNews = symbol => intrinioCompanyRequest.get(`${symbol}/news`)
 
-const apiIndiceHistoricalDataClosePrice = symbol =>
-  intrinioIndiceRequest.get(
-    `stock_market/${symbol}/historical_data/close_price`,
-  )
-
 const apiHistoricalSecurtiyClosePrice = ({
   symbol,
   frequency = 'daily',
   pageSize = 100,
+  nextPage,
 }) => {
   const queryParameters = {
     frequency: frequency,
     page_size: pageSize,
+    next_page: nextPage,
   }
 
   return intrinioHistoricalDataRequest.get(
@@ -89,6 +86,5 @@ module.exports = {
   apiSearchCompany,
   apiCompanyProfile,
   apiCompanyNews,
-  apiIndiceHistoricalDataClosePrice,
   apiHistoricalSecurtiyClosePrice,
 }
