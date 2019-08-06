@@ -10,6 +10,7 @@
     "victory": "^32.3.3"
   },
   "scripts": {
+    "dev": "react-scripts start --port 5000",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -29,5 +30,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "proxy": "http://localhost:3000",
+  "engines": {
+    "node": "10.x"
   }
 }

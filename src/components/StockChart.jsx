@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import {
-  apiIntraday,
-  apiSearchCompany,
-  apiIndiceHistoricalDataClosePrice,
-  apiRealtimeSecurityPrice,
-  apiIndiceIntraday,
-} from 'api'
+import axios from 'axios'
 
 const StockChart = () => {
   const [stockIntraday, setStockIntraday] = useState(null)
 
   useEffect(() => {
     const fetchStockIntradayData = async () => {
-      const stockIntradayData = await apiIndiceIntraday({ symbol: '^DJI' })
+      const stockIntradayData = await axios.get(
+        'api/indice/intraday?symbol=^DJI',
+      )
+      console.log(
+        'LOG: fetchStockIntradayData -> stockIntradayData',
+        stockIntradayData,
+      )
     }
 
     fetchStockIntradayData()
