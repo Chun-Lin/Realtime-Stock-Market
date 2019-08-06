@@ -7,7 +7,7 @@ const StockChart = () => {
   useEffect(() => {
     const fetchStockIntradayData = async () => {
       const stockIntradayData = await axios.get(
-        'api/indice/intraday?symbol=^DJI',
+        'api/securities/intraday?symbol=AAPL',
       )
       console.log(
         'LOG: fetchStockIntradayData -> stockIntradayData',
