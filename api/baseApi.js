@@ -37,15 +37,25 @@ const intrinioIndiceRequest = axios.create({
   headers: headers,
 })
 
-const apiIntraday = ({ symbol, startDate, startTime, endDate, endTime }) => {
+const apiIntraday = ({
+  symbol,
+  startDate = '',
+  startTime = '',
+  endDate = '',
+  endTime = '',
+  nextPage,
+  pageSize = 100,
+}) => {
   const queryParameters = {
     start_date: startDate,
     start_time: startTime,
     end_date: endDate,
     end_time: endTime,
+    next_page: nextPage,
+    page_size: pageSize,
   }
 
-  intrinioSecurityRequest.get(
+  return intrinioSecurityRequest.get(
     `${symbol}/prices/intraday?${stringify(queryParameters)}`,
   )
 }
