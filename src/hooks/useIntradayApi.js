@@ -57,6 +57,7 @@ export const useIntradayApi = queryParameters => {
         const stockIntradayData = await axios.get(
           `api/securities/intraday?${stringify(newQueryParameters)}`,
         )
+        console.log("LOG: stockIntradayData", stockIntradayData)
         const { intraday_prices, next_page } = stockIntradayData.data
         dispatch({
           type: 'FETCH_SUCCESS',

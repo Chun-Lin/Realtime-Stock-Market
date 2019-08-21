@@ -3,17 +3,22 @@ import axios from 'axios'
 import { stringify } from 'query-string'
 import { VictoryChart, VictoryLine, VictoryAxis } from 'victory'
 import dayjs from 'dayjs'
+import insert from 'ramda/src/insert'
+
 import { useIntradayApi } from 'hooks'
 
 const IntradayChart = () => {
-  const { intradayPrices, isError, isDone } = useIntradayApi({
+  const queryParameters = {
     symbol: 'MMM',
     pageSize: 100,
     startDate: '2019-08-19',
     endDate: '2019-08-19',
     startTime: '13:30:00',
     endTime: '20:00:00',
-  })
+  }
+
+  const { intradayPrices, isError, isDone } = useIntradayApi(queryParameters)
+
   return (
     <>
       {isError === true ? <div>Something Wrong!!</div> : null}
@@ -21,13 +26,23 @@ const IntradayChart = () => {
       {isDone === false ? (
         <div>Loading...</div>
       ) : (
-        <VictoryChart scale={{ time: 'time' }}>
+        <VictoryChart>
           <VictoryAxis dependentAxis />
           <VictoryAxis
-            tickValues={intradayPrices.map(d => d.time).reverse()}
+            tickValues={insert(
+              0,
+              `${queryParameters.startDate}T${queryParameters.startTime}Z`,
+              intradayPrices
+                .map(d => d.time)
+                .reverse()
+                .concat(
+                  `${queryParameters.endDate}T${queryParameters.endTime}Z`,
+                ),
+            )}
             tickFormat={time =>
-              intradayPrices[0].time === time ||
-              intradayPrices[intradayPrices.length - 1].time === time
+              time ===
+                `${queryParameters.startDate}T${queryParameters.startTime}Z` ||
+              time === `${queryParameters.endDate}T${queryParameters.endTime}Z`
                 ? dayjs(time).format('HH:mm')
                 : ''
             }
