@@ -17,13 +17,19 @@ const IntradayChart = () => {
     endTime: '20:00:00',
   }
 
-  const { intradayPrices, isError, isDone } = useIntradayApi(queryParameters)
+  const { intradayPrices, isError, isDone, isClose } = useIntradayApi(
+    queryParameters,
+  )
 
   return (
     <>
       {isError === true ? <div>Something Wrong!!</div> : null}
-
-      {isDone === false ? (
+      {isClose === true ? (
+        <div>
+          Market Closed on{' '}
+          {queryParameters.startDate ? queryParameters.startDate : 'Today'}!!
+        </div>
+      ) : isDone === false ? (
         <div>Loading...</div>
       ) : (
         <VictoryChart>

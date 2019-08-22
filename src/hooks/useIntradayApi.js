@@ -26,12 +26,21 @@ export const useIntradayApi = queryParameters => {
         ...state,
         isError: true,
         isDone: false,
+        isClose: false
       }
     } else if (action.type === 'FETCH_DONE') {
       return {
         ...state,
         isError: false,
         isDone: true,
+        isClose: false
+      }
+    } else if (action.type === 'MARKET_CLOSE') {
+      return {
+        ...state,
+        isClose: true,
+        isDone: false,
+        isLoading: false
       }
     } else {
       throw new Error()
@@ -43,6 +52,7 @@ export const useIntradayApi = queryParameters => {
     nextPageToken: '',
     isError: false,
     isDone: false,
+    isClose: false,
   })
 
   useEffect(() => {
@@ -57,15 +67,18 @@ export const useIntradayApi = queryParameters => {
         const stockIntradayData = await axios.get(
           `api/securities/intraday?${stringify(newQueryParameters)}`,
         )
-        console.log("LOG: stockIntradayData", stockIntradayData)
         const { intraday_prices, next_page } = stockIntradayData.data
-        dispatch({
-          type: 'FETCH_SUCCESS',
-          payload: {
-            intradayPrices: intraday_prices,
-            nextPageToken: next_page,
-          },
-        })
+        intraday_prices.length !== 0
+          ? dispatch({
+              type: 'FETCH_SUCCESS',
+              payload: {
+                intradayPrices: intraday_prices,
+                nextPageToken: next_page,
+              },
+            })
+          : dispatch({
+              type: 'MARKET_CLOSE',
+            })
       } catch (error) {
         dispatch({
           type: 'FETCH_FAILURE',
